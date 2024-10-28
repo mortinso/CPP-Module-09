@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:56:51 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 07:27:17 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:42:24 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,29 @@ int	main( int argc, char **argv ) {
 
 		BitcoinExchange	btc;
 
+		std::string date;
+		char separator;
+		double value;
 		while (std::getline(file, line))
 		{
-			std::istringstream istring(line);
-			std::string date;
-			float value;
-			char separator;
-
 			if (line == "")
 				continue ;
+
+			std::istringstream istring(line);
+
+			date = "";
+			separator = 0;
+			value = -1;
 			istring >> date >> separator >> value;
 
+			if (separator == 0) {
+				std::cerr << RED << "Error: bad input => " << RESET << line << std::endl;
+				continue ;
+			}
+			else if (!isValidDate(date, line))
+				continue ;
+			else if (!isValidValue(value))
+				continue ;
 
 		}
 

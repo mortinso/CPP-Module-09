@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:58:04 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 07:53:29 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:41:19 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ class BitcoinExchange {
 	private:
 		std::map<std::string, double> data;
 
+		// Methods
+		void	importDatabase( void );
+
 	public:
 		// Constructors
 		BitcoinExchange( void );
@@ -52,10 +55,11 @@ class BitcoinExchange {
 		// Setters
 
 		// Methods
-		void	exportDatabase();
-		bool	isValidDate(std::string date);
 
 		// Exceptions
 };
+
+bool	isValidDate( std::string date, std::string line );
+bool	isValidValue( double value );
 
 #endif
