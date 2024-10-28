@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:58:04 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 10:41:19 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:04:46 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class BitcoinExchange {
 
 		// Methods
 		void	importDatabase( void );
+		double	getExchangeRate(std::string date);
 
 	public:
 		// Constructors
@@ -50,13 +51,9 @@ class BitcoinExchange {
 		// Operator overloads
 		BitcoinExchange &operator = ( const BitcoinExchange &_bitcoinexchange );
 
-		// Getters
-
-		// Setters
-
 		// Methods
+		void	calculate( std::string line, std::string date, double value );
 
-		// Exceptions
 };
 
 bool	isValidDate( std::string date, std::string line );

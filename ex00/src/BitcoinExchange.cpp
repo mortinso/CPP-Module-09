@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:57:59 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 10:41:09 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:08:44 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ bool	isValidDate( std::string date, std::string line ) {
 	return (valid);
 }
 
-
 bool	isValidValue( double value ) {
 	if (value < 0)
 	{
@@ -112,4 +111,19 @@ bool	isValidValue( double value ) {
 		return false;
 	}
 	return true;
+}
+
+double	BitcoinExchange::getExchangeRate(std::string date) {
+	std::map<std::string, double>::const_iterator it = data.lower_bound(date);
+	if ( it != data.begin() && (it == data.end() || it->first != date))
+		--it;
+	if ( it == data.begin() && it->first != date)
+		return (0);
+	return (it->second);
+}
+
+void	BitcoinExchange::calculate( std::string line, std::string date, double value ) {
+	double exchange_rate = getExchangeRate(date);
+
+	std::cout << date << " => " << line.substr(line.find('|') + 2, std::string::npos) << " = " << (exchange_rate * value) << std::endl;
 }

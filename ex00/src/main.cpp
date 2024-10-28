@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:56:51 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 10:42:24 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:55:34 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main( int argc, char **argv ) {
 			else if (!isValidValue(value))
 				continue ;
 
+			btc.calculate(line, date, value);
 		}
 
 	}
