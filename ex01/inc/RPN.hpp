@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:39 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 13:46:22 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/30 04:33:05 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stack>
 # include <algorithm>
 # include <sstream>
+# include <list>
 
 # define BOLD "\e[1m"
 # define ITALIC "\e[3m"
@@ -32,7 +33,7 @@
 
 class RPN {
 	private:
-		std::stack<int> stck;
+		std::stack<int, std::list<int> > stck;
 
 		// Methods
 		void	operate( char _operator );

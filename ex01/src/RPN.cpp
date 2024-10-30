@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 13:59:12 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/30 04:49:34 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,15 @@ RPN& RPN::operator = ( const RPN &_rpn ) {
 // -----------------------------------Methods-----------------------------------
 void	RPN::doRPN( char *input ) {
 	size_t i = 0;
-	while (input[i] != 0)
+	while (input && input[i] != '\0')
 	{
 		while (input[i] == ' ')
 			i++;
 
 		// std::cout << "arg: " << input[i] << std::endl;
+
+		if (input[i] == 0)
+			break;
 
 		if (input[i] >= '0' && input[i] <= '9')
 		{
