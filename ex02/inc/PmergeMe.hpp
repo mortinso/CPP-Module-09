@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 13:59:49 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/30 07:29:27 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define PMERGEME_HPP
 
 # include <iostream>
+# include <algorithm>
+# include <vector>
+# include <deque>
+#include <string.h>
 
 # define BOLD "\e[1m"
 # define ITALIC "\e[3m"
@@ -29,10 +33,14 @@
 
 class PmergeMe {
 	private:
+		std::deque<int>		dq;
+		std::vector<int>	vect;
+		bool				isOdd;
+		int					straggler;
 
+		PmergeMe( void );
 	public:
 		// Constructors
-		PmergeMe( void );
 		PmergeMe( const PmergeMe &_pmergeme );
 
 		// Destructor
@@ -46,8 +54,14 @@ class PmergeMe {
 		// Setters
 
 		// Methods
+		int	vectorBinarySearch(std::vector<int> &vect, int num);
+		int	dequeBinarySearch(std::deque<int> &dq, int num);
 
 		// Exceptions
 };
+
+bool	isValid( int argc, char **argv );
+bool	isValidInput( int argc, char **argv );
+bool	hasDuplicates( int argc, char **argv );
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 14:00:41 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/10/30 07:31:12 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,90 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 // -----------------------------------Setters-----------------------------------
 
 // -----------------------------------Methods-----------------------------------
+int	vectorBinarySearch(std::vector<int> &vect, int num)
+{
+	if (vect.size() < 1)
+		throw (std::runtime_error("Error"));
+	int	low = 0;
+	int	high = vect.size();
+
+	while (low <= high)
+	{
+		int mid = (low + high) / 2;
+		std::cout << "mid = " << mid << std::endl;
+		if (num <= vect[mid])
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	if (low != num)
+		low--;
+	return (low);
+}
+
+int	dequeBinarySearch(std::deque<int> &dq, int num)
+{
+	if (dq.size() < 1)
+		throw (std::runtime_error("Error"));
+	int	low = 0;
+	int	high = dq.size();
+
+	while (low <= high)
+	{
+		int mid = (low + high) / 2;
+		std::cout << "mid = " << mid << std::endl;
+		if (num <= dq[mid])
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	if (low != num)
+		low--;
+	return (low);
+}
 
 // -----------------------------------Exceptions--------------------------------
+
+// -----------------------------------Utils-------------------------------------
+bool	isValid( int argc, char **argv ) {
+	if (argc < 2) {
+		std::cerr << "Wrong number of arguments" << std::endl;
+		return false;
+	}
+	if (!isValidInput(argc, argv)) {
+		std::cerr << "Invalid input" << std::endl;
+		return false;
+	}
+	if (hasDuplicates(argc, argv)) {
+		std::cerr << "No duplicate inputs allowed" << std::endl;
+		return false;
+	}
+	return true;
+}
+
+bool	isValidInput( int argc, char **argv ) {
+	for (int i = 1; i < argc; i++) {
+		if (!argv[i] || !argv[i][0] || atoi(argv[i]) < 0)
+			return false;
+		if (strlen(argv[i]) > 1 && argv[i][0] == '+')
+			i++;
+		for (size_t j = 0; argv[i][j]; j++) {
+			if (!isdigit(argv[i][j])) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool	hasDuplicates( int argc, char **argv ) {
+	char	*tmp;
+	for (int i = 1; i < argc; i++) {
+		tmp = argv[i];
+		for (size_t j = i + 1; argv[j] != NULL; i++) {
+			if (atoi(argv[j]) == atoi(argv[i]))
+				return true;
+		}
+	}
+	return false;
+}
