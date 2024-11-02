@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/30 07:31:12 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/02 19:01:10 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 // -----------------------------------Setters-----------------------------------
 
 // -----------------------------------Methods-----------------------------------
-int	vectorBinarySearch(std::vector<int> &vect, int num)
+int	PmergeMe::vectorBinarySearch(std::vector<int> &vec, int num)
 {
 	if (vect.size() < 1)
 		throw (std::runtime_error("Error"));
@@ -53,19 +53,17 @@ int	vectorBinarySearch(std::vector<int> &vect, int num)
 	while (low <= high)
 	{
 		int mid = (low + high) / 2;
-		std::cout << "mid = " << mid << std::endl;
-		if (num <= vect[mid])
+		if (num <= vec[mid])
 			high = mid - 1;
 		else
 			low = mid + 1;
 	}
-	if (low != num)
+	if (vec[low] > num)
 		low--;
 	return (low);
 }
 
-int	dequeBinarySearch(std::deque<int> &dq, int num)
-{
+int	PmergeMe::dequeBinarySearch(std::deque<int> &dq, int num) {
 	if (dq.size() < 1)
 		throw (std::runtime_error("Error"));
 	int	low = 0;
@@ -74,13 +72,12 @@ int	dequeBinarySearch(std::deque<int> &dq, int num)
 	while (low <= high)
 	{
 		int mid = (low + high) / 2;
-		std::cout << "mid = " << mid << std::endl;
 		if (num <= dq[mid])
 			high = mid - 1;
 		else
 			low = mid + 1;
 	}
-	if (low != num)
+	if (dq[low] > num)
 		low--;
 	return (low);
 }
@@ -120,9 +117,7 @@ bool	isValidInput( int argc, char **argv ) {
 }
 
 bool	hasDuplicates( int argc, char **argv ) {
-	char	*tmp;
 	for (int i = 1; i < argc; i++) {
-		tmp = argv[i];
 		for (size_t j = i + 1; argv[j] != NULL; i++) {
 			if (atoi(argv[j]) == atoi(argv[i]))
 				return true;
