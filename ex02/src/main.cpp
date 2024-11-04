@@ -6,35 +6,36 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/04 17:53:49 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/04 21:18:48 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/PmergeMe.hpp"
 
-int	main( /* void */ int argc, char **argv ) {
+int	main( int argc, char **argv ) {
 	if (!isValid(argc, argv))
 		return 1;
 	PmergeMe	pm;
 
 	pm.buildContainers(argc, argv);
+
 	pm.vectorSortPairs();
 	pm.dequeSortPairs();
+
 	pm.printContainers();
-	/* std::deque<int> dq;
-	PmergeMe *pm = NULL;
 
-	for (int i = 0; i < 10; i++)
-		dq.push_back(i * 2);
+	std::cout << std::endl;
 
-	for (int i = 0; i < 10; i++)
-		std::cout << dq[i] << std::endl;
+	pm.vectorBuildNew();
+	pm.dequeBuildNew();
 
-	for (int i = 0; i < 10; i++)
-		std::cout << "i(" << i << ") " << dq[pm->dequeBinarySearch(dq, i)] << std::endl; */
+	std::cout << std::endl;
+
+	pm.printContainers();
 }
-
+// maybe buildNew should return the new container object
 // copy operator overload
+// if size = 1, do nothing
 // learn insert sort
 // test invalid input better
 // init vals on construction

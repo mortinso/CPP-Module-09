@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/04 17:15:55 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:20:27 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,15 @@ class PmergeMe {
 		// Methods
 		void	buildContainers( int argc, char **argv );
 		void	printContainers( void );
+
+		// Vector
 		void	vectorSortPairs( void );
-		void	dequeSortPairs( void );
+		void	vectorBuildNew( void );
 		int		vectorBinarySearch( std::vector<int> &vect, int num );
+
+		// Deque
+		void	dequeSortPairs( void );
+		void	dequeBuildNew( void );
 		int		dequeBinarySearch( std::deque<int> &dq, int num );
 
 		// Exceptions
