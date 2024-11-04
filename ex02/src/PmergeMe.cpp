@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/04 16:46:55 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:53:11 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,59 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 // -----------------------------------Setters-----------------------------------
 
 // -----------------------------------Methods-----------------------------------
+// Saves input to the containers
 void	PmergeMe::buildContainers( int argc, char **argv ) {
-	this->isOdd = false;
+	isOdd = false;
 	size = argc - 1;
 	if (size % 2 != 0)
-		this->isOdd = true;
+		isOdd = true;
 
-	for (int i = 1; (i < argc && this->isOdd == false)|| i < argc - 1; i++) {
-		this->vec.push_back(std::atoi(argv[i]));
-		this->dq.push_back(std::atoi(argv[i]));
+	for (int i = 1; (i < argc && isOdd == false)|| i < argc - 1; i++) {
+		vec.push_back(std::atoi(argv[i]));
+		dq.push_back(std::atoi(argv[i]));
 	}
-	if (this->isOdd == true)
+	if (isOdd == true)
 		straggler = std::atoi(argv[argc - 1]);
 
 	printContainers();
 }
 
+// Prints the contents of both containers
 void	PmergeMe::printContainers( void ) {
 	std::cout << "Vector: { ";
-	for (int i = 0; (i < size && this->isOdd == false)|| i < size - 1; i++)
-		std::cout << this->vec[i] << ", ";
+	for (int i = 0; (i < size && isOdd == false)|| i < size - 1; i++)
+		std::cout << vec[i] << ", ";
 	std::cout << "}" << std::endl << "Deque: { ";
-	for (int i = 0; (i < size && this->isOdd == false)|| i < size - 1; i++)
-		std::cout << this->dq[i] << ", ";
+	for (int i = 0; (i < size && isOdd == false)|| i < size - 1; i++)
+		std::cout << dq[i] << ", ";
 	std::cout << "}" << std::endl;
 
 	std::cout << "Straggler: " << this->straggler << std::endl;
 }
 
+// Sorts pairs for the vector
+void PmergeMe::vectorSortPairs( void ) {
+	for (int i = 0; (i < size && isOdd == false)|| i < size - 1; i += 2) {
+		if (vec[i] > vec[i + 1]) {
+			int	tmp = vec[i];
+			vec[i] = vec[i + 1];
+			vec[i + 1] = tmp;
+		}
+	}
+}
+
+// Sorts pairs for the deque
+void PmergeMe::dequeSortPairs( void ) {
+	for (int i = 0; (i < size && isOdd == false)|| i < size - 1; i += 2) {
+		if (dq[i] > dq[i + 1]) {
+			int	tmp = dq[i];
+			dq[i] = dq[i + 1];
+			dq[i + 1] = tmp;
+		}
+	}
+}
+
+// Binary search for a vector, returns the the number or the smaller one closest to it
 int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num ) {
 	if (vec.size() < 1)
 		throw (std::runtime_error("Error"));
@@ -90,6 +115,7 @@ int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num ) {
 	return (low);
 }
 
+// Binary search for a deque, returns the the number or the smaller one closest to it
 int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num ) {
 	if (dq.size() < 1)
 		throw (std::runtime_error("Error"));

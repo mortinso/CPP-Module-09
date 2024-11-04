@@ -35,6 +35,6 @@ fclean: clean
 re: fclean all
 
 val: all
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) 2 "" 5 4 6 8 1
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) 8 6 7 4 2 1 3 5
 
 .PHONY: all clean fclean re val

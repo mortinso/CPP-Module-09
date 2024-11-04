@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/04 16:45:39 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:53:49 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main( /* void */ int argc, char **argv ) {
 	PmergeMe	pm;
 
 	pm.buildContainers(argc, argv);
+	pm.vectorSortPairs();
+	pm.dequeSortPairs();
 	pm.printContainers();
 	/* std::deque<int> dq;
 	PmergeMe *pm = NULL;
@@ -33,5 +35,6 @@ int	main( /* void */ int argc, char **argv ) {
 }
 
 // copy operator overload
+// learn insert sort
 // test invalid input better
 // init vals on construction
