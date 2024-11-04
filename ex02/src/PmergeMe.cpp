@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/02 19:01:10 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:46:55 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 // Default constructor
 PmergeMe::PmergeMe( void ) {
-	std::cout << "PmergeMe default constructor called" <<std::endl;
+	// std::cout << "PmergeMe default constructor called" <<std::endl;
+	straggler = 0;
 }
 
 // Copy constructor
 PmergeMe::PmergeMe( const PmergeMe &_pmergeme ) {
-	std::cout << "PmergeMe copy constructor called" << std::endl;
+	// std::cout << "PmergeMe copy constructor called" << std::endl;
 	*this = _pmergeme;
 }
 
 // Destructor
 PmergeMe::~PmergeMe( void ) {
-	std::cout << "PmergeMe destructor called" <<std::endl;
+	// std::cout << "PmergeMe destructor called" <<std::endl;
 }
 
 // -----------------------------------Operators---------------------------------
 // Copy assignment operator overload
 PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
-	std::cout << "PmergeMe copy assignment operator called" << std::endl;
+	// std::cout << "PmergeMe copy assignment operator called" << std::endl;
 	if (this != &_pmergeme) {
 		// this->setValue(_pmergeme.getValue());
 	}
@@ -43,15 +44,41 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 // -----------------------------------Setters-----------------------------------
 
 // -----------------------------------Methods-----------------------------------
-int	PmergeMe::vectorBinarySearch(std::vector<int> &vec, int num)
-{
-	if (vect.size() < 1)
-		throw (std::runtime_error("Error"));
-	int	low = 0;
-	int	high = vect.size();
+void	PmergeMe::buildContainers( int argc, char **argv ) {
+	this->isOdd = false;
+	size = argc - 1;
+	if (size % 2 != 0)
+		this->isOdd = true;
 
-	while (low <= high)
-	{
+	for (int i = 1; (i < argc && this->isOdd == false)|| i < argc - 1; i++) {
+		this->vec.push_back(std::atoi(argv[i]));
+		this->dq.push_back(std::atoi(argv[i]));
+	}
+	if (this->isOdd == true)
+		straggler = std::atoi(argv[argc - 1]);
+
+	printContainers();
+}
+
+void	PmergeMe::printContainers( void ) {
+	std::cout << "Vector: { ";
+	for (int i = 0; (i < size && this->isOdd == false)|| i < size - 1; i++)
+		std::cout << this->vec[i] << ", ";
+	std::cout << "}" << std::endl << "Deque: { ";
+	for (int i = 0; (i < size && this->isOdd == false)|| i < size - 1; i++)
+		std::cout << this->dq[i] << ", ";
+	std::cout << "}" << std::endl;
+
+	std::cout << "Straggler: " << this->straggler << std::endl;
+}
+
+int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num ) {
+	if (vec.size() < 1)
+		throw (std::runtime_error("Error"));
+	int	high = vec.size();
+	int	low = 0;
+
+	while (low <= high) {
 		int mid = (low + high) / 2;
 		if (num <= vec[mid])
 			high = mid - 1;
@@ -63,14 +90,13 @@ int	PmergeMe::vectorBinarySearch(std::vector<int> &vec, int num)
 	return (low);
 }
 
-int	PmergeMe::dequeBinarySearch(std::deque<int> &dq, int num) {
+int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num ) {
 	if (dq.size() < 1)
 		throw (std::runtime_error("Error"));
-	int	low = 0;
 	int	high = dq.size();
+	int	low = 0;
 
-	while (low <= high)
-	{
+	while (low <= high) {
 		int mid = (low + high) / 2;
 		if (num <= dq[mid])
 			high = mid - 1;
@@ -118,7 +144,7 @@ bool	isValidInput( int argc, char **argv ) {
 
 bool	hasDuplicates( int argc, char **argv ) {
 	for (int i = 1; i < argc; i++) {
-		for (size_t j = i + 1; argv[j] != NULL; i++) {
+		for (int j = i + 1; j < argc; j++) {
 			if (atoi(argv[j]) == atoi(argv[i]))
 				return true;
 		}

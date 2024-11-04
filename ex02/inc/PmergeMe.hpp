@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/30 07:29:27 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:39:21 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@
 class PmergeMe {
 	private:
 		std::deque<int>		dq;
-		std::vector<int>	vect;
+		std::vector<int>	vec;
 		bool				isOdd;
 		int					straggler;
+		int					size;
 
-		PmergeMe( void );
 	public:
 		// Constructors
+		PmergeMe( void );
 		PmergeMe( const PmergeMe &_pmergeme );
 
 		// Destructor
@@ -54,8 +55,10 @@ class PmergeMe {
 		// Setters
 
 		// Methods
-		int	vectorBinarySearch(std::vector<int> &vect, int num);
-		int	dequeBinarySearch(std::deque<int> &dq, int num);
+		void	buildContainers( int argc, char **argv );
+		void	printContainers( void );
+		int		vectorBinarySearch( std::vector<int> &vect, int num );
+		int		dequeBinarySearch( std::deque<int> &dq, int num );
 
 		// Exceptions
 };
