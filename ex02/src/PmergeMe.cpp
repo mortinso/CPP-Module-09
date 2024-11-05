@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/04 21:15:33 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:51:03 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num ) {
 
 // -----------------------------------Exceptions--------------------------------
 
-// -----------------------------------Utils-------------------------------------
+// -----------------------------------Checkers-------------------------------------
 bool	isValid( int argc, char **argv ) {
 	if (argc < 2) {
 		std::cerr << "Wrong number of arguments" << std::endl;
@@ -227,6 +227,7 @@ bool	isValid( int argc, char **argv ) {
 	return true;
 }
 
+// Checks arguments for invalid characters
 bool	isValidInput( int argc, char **argv ) {
 	for (int i = 1; i < argc; i++) {
 		if (!argv[i] || !argv[i][0] || atoi(argv[i]) < 0)
@@ -242,6 +243,7 @@ bool	isValidInput( int argc, char **argv ) {
 	return true;
 }
 
+// Checks that there aren't any duplicate arguments
 bool	hasDuplicates( int argc, char **argv ) {
 	for (int i = 1; i < argc; i++) {
 		for (int j = i + 1; j < argc; j++) {
@@ -250,4 +252,10 @@ bool	hasDuplicates( int argc, char **argv ) {
 		}
 	}
 	return false;
+}
+
+// -----------------------------------Utils-------------------------------------
+// Returns the number of index n in jacobsthaal's sequence
+int	jacobsNumber( int n ) {
+	return ((pow(2, n) - pow(-1, n)) / 3);
 }

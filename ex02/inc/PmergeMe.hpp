@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/04 20:20:27 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:54:43 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,25 @@
 # include <algorithm>
 # include <vector>
 # include <deque>
-#include <string.h>
+# include <string.h>
+# include <cmath>
 
-# define BOLD "\e[1m"
-# define ITALIC "\e[3m"
-# define UNDERLINE "\e[4m"
-# define RED "\e[91m"
-# define GREEN "\e[92m"
-# define YELLOW "\e[93m"
-# define BLUE "\e[94m"
-# define PURPLE "\e[95m"
-# define CYAN "\e[96m"
-# define INVERT "\e[90m\e[107m"
-# define RESET "\e[0m"
+# define BOLD		"\e[1m"
+# define ITALIC		"\e[3m"
+# define UNDERLINE	"\e[4m"
+# define RED		"\e[91m"
+# define GREEN		"\e[92m"
+# define YELLOW		"\e[93m"
+# define BLUE		"\e[94m"
+# define PURPLE		"\e[95m"
+# define CYAN		"\e[96m"
+# define INVERT		"\e[90m\e[107m"
+# define RESET		"\e[0m"
 
 class PmergeMe {
 	private:
-		std::deque<int>		dq;
 		std::vector<int>	vec;
+		std::deque<int>		dq;
 		bool				isOdd;
 		int					straggler;
 		int					size;
@@ -71,8 +72,12 @@ class PmergeMe {
 		// Exceptions
 };
 
+// Checkers
 bool	isValid( int argc, char **argv );
 bool	isValidInput( int argc, char **argv );
 bool	hasDuplicates( int argc, char **argv );
+
+// Utils
+int	jacobsNumber( int n );
 
 #endif
