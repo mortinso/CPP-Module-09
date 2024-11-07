@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/07 17:10:56 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:27:32 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@
 
 class PmergeMe {
 	private:
-		std::vector<int>	vec;
-		std::deque<int>		dq;
-		bool				isOdd;
-		int					straggler;
-		int					size;
+		std::vector<std::pair<int, int> >	vec;
+		std::deque<std::pair<int, int> >	dq;
+		bool								isOdd;
+		int									straggler;
+		int									size;
 
 		PmergeMe( const PmergeMe &_pmergeme );
 		PmergeMe &operator = ( const PmergeMe &_pmergeme );
@@ -57,12 +57,12 @@ class PmergeMe {
 		// Vector
 		void	vectorSortPairs( void );
 		void	vectorBuildNew( void );
-		int		vectorBinarySearch( std::vector<int> &vect, int num );
+		int		vectorBinarySearch( std::vector<int> &vec, int num, int big );
 
 		// Deque
 		void	dequeSortPairs( void );
 		void	dequeBuildNew( void );
-		int		dequeBinarySearch( std::deque<int> &dq, int num );
+		int		dequeBinarySearch( std::deque<int> &dq, int num, int big );
 };
 
 // Checkers
