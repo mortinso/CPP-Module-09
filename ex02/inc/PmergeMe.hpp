@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/05 18:54:43 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:10:56 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,15 @@ class PmergeMe {
 		int					straggler;
 		int					size;
 
+		PmergeMe( const PmergeMe &_pmergeme );
+		PmergeMe &operator = ( const PmergeMe &_pmergeme );
+
 	public:
 		// Constructors
 		PmergeMe( void );
-		PmergeMe( const PmergeMe &_pmergeme );
 
 		// Destructor
 		~PmergeMe( void );
-
-		// Operator overloads
-		PmergeMe &operator = ( const PmergeMe &_pmergeme );
-
-		// Getters
-
-		// Setters
 
 		// Methods
 		void	buildContainers( int argc, char **argv );
@@ -68,8 +63,6 @@ class PmergeMe {
 		void	dequeSortPairs( void );
 		void	dequeBuildNew( void );
 		int		dequeBinarySearch( std::deque<int> &dq, int num );
-
-		// Exceptions
 };
 
 // Checkers

@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/05 18:51:03 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:12:24 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,10 @@ PmergeMe::~PmergeMe( void ) {
 // Copy assignment operator overload
 PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 	// std::cout << "PmergeMe copy assignment operator called" << std::endl;
-	if (this != &_pmergeme) {
-		// this->setValue(_pmergeme.getValue());
-	}
+	if (this != &_pmergeme)
+		*this = _pmergeme;
 	return (*this);
 }
-
-// -----------------------------------Getters-----------------------------------
-
-// -----------------------------------Setters-----------------------------------
 
 // -----------------------------------Methods-----------------------------------
 // Saves input to the containers
@@ -72,6 +67,7 @@ void	PmergeMe::printContainers( void ) {
 	std::cout << "Straggler: " << this->straggler << std::endl;
 }
 
+// -----------------------------------Vector------------------------------------
 // "Divides" the vector into pairs and sorts the pairs members
 void	PmergeMe::vectorSortPairs( void ) {
 	for (size_t i = 0; i < vec.size(); i += 2) {
@@ -79,17 +75,6 @@ void	PmergeMe::vectorSortPairs( void ) {
 			int	tmp = vec[i];
 			vec[i] = vec[i + 1];
 			vec[i + 1] = tmp;
-		}
-	}
-}
-
-// "Divides" the deque into pairs and sorts the pairs members
-void	PmergeMe::dequeSortPairs( void ) {
-	for (size_t i = 0; i < dq.size(); i += 2) {
-		if (dq[i] > dq[i + 1]) {
-			int	tmp = dq[i];
-			dq[i] = dq[i + 1];
-			dq[i + 1] = tmp;
 		}
 	}
 }
@@ -130,6 +115,39 @@ void	PmergeMe::vectorBuildNew( void ) {
 	std::cout << "VECTOR NEXT: Do binary sorting with the jacobsthaal numbers" << std::endl;
 }
 
+// Binary search for a vector, returns the index of the number or the largest one closest to it
+int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num ) {
+	if (vec.size() < 1)
+		throw (std::runtime_error("Error"));
+	int	high = vec.size();
+	int	low = 0;
+
+	while (low != high) {
+		int mid = (low + high) / 2;
+		if (num < vec[mid])
+			high = mid;
+		else if (num > vec[mid])
+			low = mid + 1;
+		else {
+			std::cerr << "Error: Same number" << std::endl;
+			return mid;
+		}
+	}
+	return (high);
+}
+
+// -----------------------------------Deque-------------------------------------
+// "Divides" the deque into pairs and sorts the pairs members
+void	PmergeMe::dequeSortPairs( void ) {
+	for (size_t i = 0; i < dq.size(); i += 2) {
+		if (dq[i] > dq[i + 1]) {
+			int	tmp = dq[i];
+			dq[i] = dq[i + 1];
+			dq[i + 1] = tmp;
+		}
+	}
+}
+
 // Builds new deque following steps 3 and 4
 void	PmergeMe::dequeBuildNew( void ) {
 	std::deque<int>	new_dq;
@@ -166,27 +184,6 @@ void	PmergeMe::dequeBuildNew( void ) {
 	std::cout << "DEQUE NEXT: Do binary sorting with the jacobsthaal numbers" << std::endl;
 }
 
-// Binary search for a vector, returns the index of the number or the largest one closest to it
-int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num ) {
-	if (vec.size() < 1)
-		throw (std::runtime_error("Error"));
-	int	high = vec.size();
-	int	low = 0;
-
-	while (low != high) {
-		int mid = (low + high) / 2;
-		if (num < vec[mid])
-			high = mid;
-		else if (num > vec[mid])
-			low = mid + 1;
-		else {
-			std::cerr << "Error: Same number" << std::endl;
-			return mid;
-		}
-	}
-	return (high);
-}
-
 // Binary search for a deque, returns the index of the number or the largest one closest to it
 int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num ) {
 	if (dq.size() < 1)
@@ -207,8 +204,6 @@ int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num ) {
 	}
 	return (high);
 }
-
-// -----------------------------------Exceptions--------------------------------
 
 // -----------------------------------Checkers-------------------------------------
 bool	isValid( int argc, char **argv ) {
