@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/07 18:59:57 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:52:44 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ int	main( int argc, char **argv ) {
 	std::cout << std::endl;
 
 	pm.printContainers();
+
+	// std::vector<int> vec;
+
+	// for (int i = 3; i < 9; i++)
+	// 	vec.push_back(i);
+
+	// std::cout << "{ ";
+	// for (size_t i = 0; i < vec.size(); i++)
+	// 	std::cout << vec[i] << " | ";
+	// std::cout << "}" << std::endl;
+
+	// std::cout << "When lower, binarySearch returns: " << pm.vectorBinarySearch(vec, 1, 8) << std::endl;
+
+	// vec.insert(vec.begin(), 1);
+
 }
 // Hub to call merge-insert for vector and deque seperately
 // maybe buildNew should return the new container object

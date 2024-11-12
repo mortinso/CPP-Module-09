@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/07 18:44:06 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:37:25 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Default constructor
 PmergeMe::PmergeMe( void ) {
 	// std::cout << "PmergeMe default constructor called" <<std::endl;
-	straggler = 0;
+	straggler = -1;
 }
 
 // Copy constructor
@@ -39,49 +39,18 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 }
 
 // -----------------------------------Methods-----------------------------------
-/* // Saves input to the containers
-void	PmergeMe::buildContainers( int argc, char **argv ) {
-	isOdd = false;
-	size = argc - 1;
-	if (size % 2 != 0)
-		isOdd = true;
-
-	for (int i = 1; (i < argc && isOdd == false)|| i < argc - 1; i++) {
-		vec.push_back(std::atoi(argv[i]));
-		dq.push_back(std::atoi(argv[i]));
-	}
-	if (isOdd == true)
-		straggler = std::atoi(argv[argc - 1]);
-}
-
-// Prints the contents of both containers
-void	PmergeMe::printContainers( void ) {
-	std::cout << "Vector: { ";
-	for (size_t i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << ", ";
-	std::cout << "}" << std::endl << "Deque: { ";
-	for (size_t i = 0; i < dq.size(); i++)
-		std::cout << dq[i] << ", ";
-	std::cout << "}" << std::endl;
-
-	std::cout << "Straggler: " << this->straggler << std::endl;
-} */
-
 // Saves input to the containers
 void	PmergeMe::buildContainers( int argc, char **argv ) {
-	isOdd = false;
 	size = argc - 1;
-	if (size % 2 != 0)
-		isOdd = true;
 
-	for (int i = 1; (i < argc - 1 && isOdd == false)|| i < argc - 2; i += 2) {
+	for (int i = 1; i < argc - (size % 2) - 1; i += 2) {
 		std::pair<int, int> tmp;
 		tmp.first = std::atoi(argv[i]);
 		tmp.second = std::atoi(argv[i + 1]);
 		vec.push_back(tmp);
 		dq.push_back(tmp);
 	}
-	if (isOdd == true)
+	if (size % 2 != 0)
 		straggler = std::atoi(argv[argc - 1]);
 }
 
@@ -90,7 +59,8 @@ void	PmergeMe::printContainers( void ) {
 	std::cout << "Vector: { ";
 	for (size_t i = 0; i < vec.size(); i++)
 		std::cout << vec[i].first << ", " << vec[i].second << " | ";
-	std::cout << "}" << std::endl << "Deque: { ";
+	std::cout << "}" << std::endl;
+	std::cout << "Deque: { ";
 	for (size_t i = 0; i < dq.size(); i++)
 		std::cout << dq[i].first << ", " << dq[i].second << " | ";
 	std::cout << "}" << std::endl;
@@ -137,8 +107,41 @@ void	PmergeMe::vectorBuildNew( void ) {
 	// Removes it
 	vec.erase(vec.begin());
 
-	// Call next function that does the binary sorting with the jacobsthaal numbers
-	std::cout << "VECTOR NEXT: Do binary sorting with the jacobsthaal numbers" << std::endl;
+	vectorJacobsthaal(new_vec);
+
+	std::cout << "Sorted: { ";
+	for (size_t i = 0; i < new_vec.size(); i++)
+		std::cout << new_vec[i] << " | ";
+	std::cout << "}" << std::endl;
+}
+
+// Sorts 'sorted' using binary search and jacobsthaals sequence
+void	PmergeMe::vectorJacobsthaal( std::vector<int> &sorted ) {
+	for (int jacob_index = 3; vec.size() > 0; jacob_index++) {
+		// Set group_size
+		size_t group_size = jacobsNumber(jacob_index) - jacobsNumber(jacob_index - 1);
+		if (group_size > vec.size())
+			group_size = vec.size();
+
+		// Add members from vec to sorted, starting at vec[group_size - 1] and finishing at vec[i]
+		for (int i = (int)group_size - 1; i >= 0; i--) {
+			int place = vectorBinarySearch(sorted, vec[i].first, vec[i].second);
+			sorted.insert(sorted.begin() + place, vec[i].first);
+		}
+
+		// Erase members already added to sorted
+		for (size_t i = 0; i < group_size; i++)
+			vec.erase(vec.begin());
+	}
+
+	if (straggler >= 0) {
+		if (straggler > sorted.back())
+			sorted.push_back(straggler);
+		else {
+			int place = vectorBinarySearch(sorted, straggler, sorted.back());
+			sorted.insert(sorted.begin() + place, straggler);
+		}
+	}
 }
 
 // My spin on binary search, returns the closest number larger than 'num'
@@ -206,14 +209,47 @@ void	PmergeMe::dequeBuildNew( void ) {
 	// Removes it
 	dq.erase(dq.begin());
 
-	// Call next function that does the binary sorting with the jacobsthaal numbers
-	std::cout << "DEQUE NEXT: Do binary sorting with the jacobsthaal numbers" << std::endl;
+	dequeJacobsthaal(new_dq);
+
+	std::cout << "Sorted: { ";
+	for (size_t i = 0; i < new_dq.size(); i++)
+		std::cout << new_dq[i] << " | ";
+	std::cout << "}" << std::endl;
+}
+
+// Sorts 'sorted' using binary search and jacobsthaals sequence
+void	PmergeMe::dequeJacobsthaal( std::deque<int> &sorted ) {
+	for (int jacob_index = 3; dq.size() > 0; jacob_index++) {
+		// Set group_size
+		size_t group_size = jacobsNumber(jacob_index) - jacobsNumber(jacob_index - 1);
+		if (group_size > dq.size())
+			group_size = dq.size();
+
+		// Add members from dq to sorted, starting at dq[group_size - 1] and finishing at dq[i]
+		for (int i = (int)group_size - 1; i >= 0; i--) {
+			int place = dequeBinarySearch(sorted, dq[i].first, dq[i].second);
+			sorted.insert(sorted.begin() + place, dq[i].first);
+		}
+
+		// Erase members already added to sorted
+		for (size_t i = 0; i < group_size; i++)
+			dq.erase(dq.begin());
+	}
+
+	if (straggler >= 0) {
+		if (straggler > sorted.back())
+			sorted.push_back(straggler);
+		else {
+			int place = dequeBinarySearch(sorted, straggler, sorted.back());
+			sorted.insert(sorted.begin() + place, straggler);
+		}
+	}
 }
 
 // My spin on binary search, returns the closest number larger than 'num'
 // Errors if 'big' is not a member of 'dq' or if 'num' is already in 'dq'
 int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num, int big ) {
-	if (vec.size() < 1)
+	if (dq.size() < 1)
 		throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;

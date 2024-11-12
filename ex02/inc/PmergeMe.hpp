@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/07 18:27:32 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:36:31 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ class PmergeMe {
 	private:
 		std::vector<std::pair<int, int> >	vec;
 		std::deque<std::pair<int, int> >	dq;
-		bool								isOdd;
 		int									straggler;
 		int									size;
 
@@ -57,11 +56,13 @@ class PmergeMe {
 		// Vector
 		void	vectorSortPairs( void );
 		void	vectorBuildNew( void );
+		void	vectorJacobsthaal( std::vector<int> &sorted );
 		int		vectorBinarySearch( std::vector<int> &vec, int num, int big );
 
 		// Deque
 		void	dequeSortPairs( void );
 		void	dequeBuildNew( void );
+		void	dequeJacobsthaal( std::deque<int> &sorted );
 		int		dequeBinarySearch( std::deque<int> &dq, int num, int big );
 };
 
