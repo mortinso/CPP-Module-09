@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/12 20:39:52 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:20:24 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,13 @@ int	main( int argc, char **argv ) {
 
 	PmergeMe	pm;
 
-	pm.buildContainers(argc, argv);
-
-	pm.vectorSortPairs();
-	pm.dequeSortPairs();
-
-	pm.printContainers();
-
+	std::cout << "Before: ";
+	for (int i = 1; i < argc; i++)
+		std::cout << argv[i] << " ";
 	std::cout << std::endl;
 
-	pm.vectorBuildNew();
-	pm.dequeBuildNew();
-
-	std::cout << std::endl;
-
-	pm.printContainers();
+	pm.vectorMergeInsert(argc, argv);
+	pm.dequeMergeInsert(argc, argv);
 }
 // Construct containers seperately
 // Add sorted_vec and sorted_dq to the class
@@ -41,6 +33,10 @@ int	main( int argc, char **argv ) {
 // if size = 1, do nothing
 // learn insert sort
 // test invalid input better
+//		test one argument
+//		test already sorted
+//		test ""
+//		test just spaces
 
 // https://en.wikipedia.org/wiki/Merge-insertion_sort
 // https://en.wikipedia.org/wiki/Binary_search

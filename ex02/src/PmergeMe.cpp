@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/12 19:37:25 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:24:04 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,32 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 }
 
 // -----------------------------------Methods-----------------------------------
+// Calls merge-insert for each container and times it, outputting the messages expected by the subject
+void	PmergeMe::mergeInsert( int argc, char **argv ) {
+	//time variables here
+
+	std::cout << "Before: ";
+	for (int i = 1; i < argc; i++)
+		std::cout << argv[i] << " ";
+	std::cout << std::endl;
+
+	size = argc - 1;
+
+	// start timing vector
+	// call vector merge insert
+	// stop timing vector
+
+	// start timing deque
+	// call deque merge insert
+	// stop timing deque
+
+	// output after
+
+	// output time for vector
+	// output time for deque
+}
+
+
 // Saves input to the containers
 void	PmergeMe::buildContainers( int argc, char **argv ) {
 	size = argc - 1;
@@ -69,6 +95,37 @@ void	PmergeMe::printContainers( void ) {
 }
 
 // -----------------------------------Vector------------------------------------
+// Merge Insert sort for vector
+void	PmergeMe::vectorMergeInsert( int argc, char **argv ) {
+	std::cout << RED << "Remove line under this message" << RESET << std::endl;
+	size = argc - 1;
+
+	vectorBuild(argc, argv);
+
+	vectorSortPairs();
+
+	vectorLarge();
+
+	vectorJacobsthaal();
+
+	std::cout << RED << "Remove this: " << RESET;
+	for (size_t i = 0; i < sorted_vec.size(); i++)
+		std::cout << sorted_vec[i] << " ";
+	std::cout << std::endl;
+}
+
+// Creates the vector with its members
+void	PmergeMe::vectorBuild( int argc, char **argv ) {
+	for (int i = 1; i < argc - (size % 2) - 1; i += 2) {
+		std::pair<int, int> tmp;
+		tmp.first = std::atoi(argv[i]);
+		tmp.second = std::atoi(argv[i + 1]);
+		vec.push_back(tmp);
+	}
+	if (size % 2 != 0)
+		straggler = std::atoi(argv[argc - 1]);
+}
+
 // Divides the vector into pairs and sorts the pairs in ascending order and their members in descending order
 void	PmergeMe::vectorSortPairs( void ) {
 	// Sort members descendingly
@@ -94,75 +151,66 @@ void	PmergeMe::vectorSortPairs( void ) {
 }
 
 // Builds new vector following steps 3 and 4
-void	PmergeMe::vectorBuildNew( void ) {
-	std::vector<int>	new_vec;
-
+void	PmergeMe::vectorLarge( void ) {
 	// Adds the largest member of each pair to new_vec
 	for (size_t i = 0; i < vec.size(); i++)
-		new_vec.push_back(vec[i].second);
+		sorted_vec.push_back(vec[i].second);
 
 	// Inserts at the start of new_vec the element that was paired with its first and smallest element
-	new_vec.insert(new_vec.begin(), vec[0].first);
+	sorted_vec.insert(sorted_vec.begin(), vec[0].first);
 
 	// Removes it
 	vec.erase(vec.begin());
-
-	vectorJacobsthaal(new_vec);
-
-	std::cout << "Sorted: { ";
-	for (size_t i = 0; i < new_vec.size(); i++)
-		std::cout << new_vec[i] << " | ";
-	std::cout << "}" << std::endl;
 }
 
-// Sorts 'sorted' using binary search and jacobsthaals sequence
-void	PmergeMe::vectorJacobsthaal( std::vector<int> &sorted ) {
+// Sorts members of vec into sorted_vec using binary search and jacobsthaals sequence
+void	PmergeMe::vectorJacobsthaal( void ) {
 	for (int jacob_index = 3; vec.size() > 0; jacob_index++) {
 		// Set group_size
 		size_t group_size = jacobsNumber(jacob_index) - jacobsNumber(jacob_index - 1);
 		if (group_size > vec.size())
 			group_size = vec.size();
 
-		// Add members from vec to sorted, starting at vec[group_size - 1] and finishing at vec[i]
+		// Add members from vec to sorted_vec, starting at vec[group_size - 1] and finishing at vec[i]
 		for (int i = (int)group_size - 1; i >= 0; i--) {
-			int place = vectorBinarySearch(sorted, vec[i].first, vec[i].second);
-			sorted.insert(sorted.begin() + place, vec[i].first);
+			int place = vectorBinarySearch(vec[i].first, vec[i].second);
+			sorted_vec.insert(sorted_vec.begin() + place, vec[i].first);
 		}
 
-		// Erase members already added to sorted
+		// Erase members already added to sorted_vec
 		for (size_t i = 0; i < group_size; i++)
 			vec.erase(vec.begin());
 	}
 
 	if (straggler >= 0) {
-		if (straggler > sorted.back())
-			sorted.push_back(straggler);
+		if (straggler > sorted_vec.back())
+			sorted_vec.push_back(straggler);
 		else {
-			int place = vectorBinarySearch(sorted, straggler, sorted.back());
-			sorted.insert(sorted.begin() + place, straggler);
+			int place = vectorBinarySearch(straggler, sorted_vec.back());
+			sorted_vec.insert(sorted_vec.begin() + place, straggler);
 		}
 	}
 }
 
 // My spin on binary search, returns the closest number larger than 'num'
-// Errors if 'big' is not a member of 'vec' or if 'num' is already in 'vec'
-int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num, int big ) {
+// Errors if 'big' is not a member of sorted_vec or if 'num' is already in sorted_vec
+int	PmergeMe::vectorBinarySearch( int num, int big ) {
 	if (vec.size() < 1)
 		throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;
 
-	while ((size_t)high < vec.size() && vec[high] != big)
+	while ((size_t)high < sorted_vec.size() && sorted_vec[high] != big)
 		high++;
 
-	if (vec[high] != big)
+	if (sorted_vec[high] != big)
 		throw (std::runtime_error("Error: Binary Search failed"));
 
 	while (low != high) {
 		int mid = (low + high) / 2;
-		if (num < vec[mid])
+		if (num < sorted_vec[mid])
 			high = mid;
-		else if (num > vec[mid])
+		else if (num > sorted_vec[mid])
 			low = mid + 1;
 		else
 			throw (std::runtime_error("Error: Binary Search encountered a duplicate number"));
@@ -171,6 +219,37 @@ int	PmergeMe::vectorBinarySearch( std::vector<int> &vec, int num, int big ) {
 }
 
 // -----------------------------------Deque-------------------------------------
+// Merge Insert sort for deque
+void	PmergeMe::dequeMergeInsert( int argc, char **argv ) {
+	std::cout << RED << "Remove line under this message" << RESET << std::endl;
+	size = argc - 1;
+
+	dequeBuild(argc, argv);
+
+	dequeSortPairs();
+
+	dequeLarge();
+
+	dequeJacobsthaal();
+
+	std::cout << RED << "Remove this: " << RESET;
+	for (size_t i = 0; i < sorted_dq.size(); i++)
+		std::cout << sorted_dq[i] << " ";
+	std::cout << std::endl;
+}
+
+// Creates the deque with its members
+void	PmergeMe::dequeBuild( int argc, char **argv ) {
+	for (int i = 1; i < argc - (size % 2) - 1; i += 2) {
+		std::pair<int, int> tmp;
+		tmp.first = std::atoi(argv[i]);
+		tmp.second = std::atoi(argv[i + 1]);
+		dq.push_back(tmp);
+	}
+	if (size % 2 != 0)
+		straggler = std::atoi(argv[argc - 1]);
+}
+
 // Divides the deque into pairs and sorts the pairs in ascending order and their members in descending order
 void	PmergeMe::dequeSortPairs( void ) {
 	// Sort members descendingly
@@ -196,75 +275,66 @@ void	PmergeMe::dequeSortPairs( void ) {
 }
 
 // Builds new deque following steps 3 and 4
-void	PmergeMe::dequeBuildNew( void ) {
-	std::deque<int>	new_dq;
-
-	// Adds the largest member of each pair to new_dq
+void	PmergeMe::dequeLarge( void ) {
+	// Adds the largest member of each pair to sorted_dq
 	for (size_t i = 0; i < dq.size(); i++)
-		new_dq.push_back(dq[i].second);
+		sorted_dq.push_back(dq[i].second);
 
-	// Inserts at the start of new_vec the element that was paired with its first and smallest element
-	new_dq.insert(new_dq.begin(), dq[0].first);
+	// Inserts at the start of sorted_dq the element that was paired with its first and smallest element
+	sorted_dq.insert(sorted_dq.begin(), dq[0].first);
 
 	// Removes it
 	dq.erase(dq.begin());
-
-	dequeJacobsthaal(new_dq);
-
-	std::cout << "Sorted: { ";
-	for (size_t i = 0; i < new_dq.size(); i++)
-		std::cout << new_dq[i] << " | ";
-	std::cout << "}" << std::endl;
 }
 
-// Sorts 'sorted' using binary search and jacobsthaals sequence
-void	PmergeMe::dequeJacobsthaal( std::deque<int> &sorted ) {
+// Sorts members of dq into sorted_dq using binary search and jacobsthaals sequence
+void	PmergeMe::dequeJacobsthaal( void ) {
 	for (int jacob_index = 3; dq.size() > 0; jacob_index++) {
 		// Set group_size
 		size_t group_size = jacobsNumber(jacob_index) - jacobsNumber(jacob_index - 1);
 		if (group_size > dq.size())
 			group_size = dq.size();
 
-		// Add members from dq to sorted, starting at dq[group_size - 1] and finishing at dq[i]
+		// Add members from dq to sorted_dq, starting at dq[group_size - 1] and finishing at dq[i]
 		for (int i = (int)group_size - 1; i >= 0; i--) {
-			int place = dequeBinarySearch(sorted, dq[i].first, dq[i].second);
-			sorted.insert(sorted.begin() + place, dq[i].first);
+			int place = dequeBinarySearch(dq[i].first, dq[i].second);
+			sorted_dq.insert(sorted_dq.begin() + place, dq[i].first);
 		}
 
-		// Erase members already added to sorted
+		// Erase members already added to sorted_dq
 		for (size_t i = 0; i < group_size; i++)
 			dq.erase(dq.begin());
 	}
 
 	if (straggler >= 0) {
-		if (straggler > sorted.back())
-			sorted.push_back(straggler);
+		if (straggler > sorted_dq.back())
+			sorted_dq.push_back(straggler);
 		else {
-			int place = dequeBinarySearch(sorted, straggler, sorted.back());
-			sorted.insert(sorted.begin() + place, straggler);
+			int place = dequeBinarySearch(straggler, sorted_dq.back());
+			sorted_dq.insert(sorted_dq.begin() + place, straggler);
 		}
 	}
 }
 
 // My spin on binary search, returns the closest number larger than 'num'
-// Errors if 'big' is not a member of 'dq' or if 'num' is already in 'dq'
-int	PmergeMe::dequeBinarySearch( std::deque<int> &dq, int num, int big ) {
+// Errors if 'big' is not a member of sorted_dq or if 'num' is already in sorted_dq
+int	PmergeMe::dequeBinarySearch( int num, int big ) {
 	if (dq.size() < 1)
 		throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;
 
-	while ((size_t)high < dq.size() && dq[high] != big)
+	while ((size_t)high < sorted_dq.size() && sorted_dq[high] != big)
 		high++;
 
-	if (dq[high] != big)
+	if (sorted_dq[high] != big)
 		throw (std::runtime_error("Error: Binary Search failed"));
 
 	while (low != high) {
 		int mid = (low + high) / 2;
-		if (num < dq[mid])
+		if (num < sorted_dq[mid])
 			high = mid;
-		else if (num > dq[mid])
+		else if (num > sorted_dq[mid])
 			low = mid + 1;
 		else
 			throw (std::runtime_error("Error: Binary Search encountered a duplicate number"));

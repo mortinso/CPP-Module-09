@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/12 19:36:31 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:20:58 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@
 class PmergeMe {
 	private:
 		std::vector<std::pair<int, int> >	vec;
+		std::vector<int>					sorted_vec;
 		std::deque<std::pair<int, int> >	dq;
+		std::deque<int>						sorted_dq;
 		int									straggler;
 		int									size;
 
@@ -50,20 +52,25 @@ class PmergeMe {
 		~PmergeMe( void );
 
 		// Methods
+		void	mergeInsert( int argc, char **argv );
 		void	buildContainers( int argc, char **argv );
 		void	printContainers( void );
 
 		// Vector
+		void	vectorMergeInsert( int argc, char **argv );
+		void	vectorBuild( int argc, char **argv );
 		void	vectorSortPairs( void );
-		void	vectorBuildNew( void );
-		void	vectorJacobsthaal( std::vector<int> &sorted );
-		int		vectorBinarySearch( std::vector<int> &vec, int num, int big );
+		void	vectorLarge( void );
+		void	vectorJacobsthaal( void );
+		int		vectorBinarySearch( int num, int big );
 
 		// Deque
+		void	dequeMergeInsert( int argc, char **argv );
+		void	dequeBuild( int argc, char **argv );
 		void	dequeSortPairs( void );
-		void	dequeBuildNew( void );
-		void	dequeJacobsthaal( std::deque<int> &sorted );
-		int		dequeBinarySearch( std::deque<int> &dq, int num, int big );
+		void	dequeLarge( void );
+		void	dequeJacobsthaal( void );
+		int		dequeBinarySearch( int num, int big );
 };
 
 // Checkers
