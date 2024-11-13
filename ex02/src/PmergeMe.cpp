@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 18:08:33 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 20:31:07 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,39 +41,59 @@ PmergeMe& PmergeMe::operator = ( const PmergeMe &_pmergeme ) {
 // -----------------------------------Methods-----------------------------------
 // Calls merge-insert for each container and times it, outputting the messages expected by the subject
 void	PmergeMe::mergeInsert( int argc, char **argv ) {
-	//time variables here
-
-	std::cout << "Before: ";
-	for (int i = 1; i < argc; i++)
+	std::cout << "Before:\t";
+	for (int i = 1; i < argc; i++) {
 		std::cout << argv[i] << " ";
+		// v--Comment to see full thing--v
+		if (i == 6) {
+			std::cout << "[...]";
+			break;
+		}
+	}
 	std::cout << std::endl;
 
 	size = argc - 1;
 
-	// start timing vector
+	vec_time = std::clock();
 	vectorMergeInsert(argc, argv);
-	// stop timing vector
+	vec_time = std::clock() - vec_time;
 
 	straggler = -1;
 
-	// start timing deque
+	dq_time = std::clock();
 	dequeMergeInsert(argc, argv);
-	// stop timing deque
+	dq_time = std::clock() - dq_time;
 
 	// Vector after
-	std::cout << "After: ";
-	for (size_t i = 0; i < sorted_vec.size(); i++)
+	std::cout << "After:\t";
+	for (size_t i = 0; i < sorted_vec.size(); i++) {
 		std::cout << sorted_vec[i] << " ";
+		// v--Comment to see full thing--v
+		if (i == 5) {
+			std::cout << "[...]";
+			break;
+		}
+	}
 	std::cout << std::endl;
 
 	// Deque after
-	// std::cout << "After: ";
-	// for (size_t i = 0; i < sorted_dq.size(); i++)
+	// std::cout << "After:\t";
+	// for (size_t i = 0; i < sorted_dq.size(); i++) {
 	// 	std::cout << sorted_dq[i] << " ";
+	// 	// v--Comment to see full thing--v
+	// 	if (i == 5) {
+	// 		std::cout << "[...]";
+	// 		break;
+	// 	}
+	// }
 	// std::cout << std::endl;
 
-	// output time for vector
-	// output time for deque
+	std::cout << std::endl;
+
+	std::cout << "Time to process a range of " << size << " elements with std::vector:\t" << INVERT ;
+	std::cout << static_cast<double>(vec_time) / CLOCKS_PER_SEC * 1000 << "ms" << RESET << std::endl;
+	std::cout << "Time to process a range of " << size << " elements with std::deque :\t" << INVERT;
+	std::cout << static_cast<double>(dq_time) / CLOCKS_PER_SEC * 1000 << "ms" << RESET << std::endl;
 }
 
 // -----------------------------------Vector------------------------------------
@@ -169,8 +189,8 @@ void	PmergeMe::vectorJacobsthaal( void ) {
 // My spin on binary search, returns the closest number larger than 'num'
 // Errors if 'big' is not a member of sorted_vec or if 'num' is already in sorted_vec
 int	PmergeMe::vectorBinarySearch( int num, int big ) {
-	if (vec.size() < 1)
-		throw (std::runtime_error("Error"));
+	// if (vec.size() < 1)
+	// 	throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;
 
@@ -247,7 +267,7 @@ void	PmergeMe::dequeLarge( void ) {
 		sorted_dq.push_back(dq[i].second);
 
 	// Inserts at the start of sorted_dq the element that was paired with its first and smallest element
-	sorted_dq.insert(sorted_dq.begin(), dq[0].first);
+	sorted_dq.push_front(dq[0].first);
 
 	// Removes it
 	dq.erase(dq.begin());
@@ -264,7 +284,10 @@ void	PmergeMe::dequeJacobsthaal( void ) {
 		// Add members from dq to sorted_dq, starting at dq[group_size - 1] and finishing at dq[i]
 		for (int i = (int)group_size - 1; i >= 0; i--) {
 			int place = dequeBinarySearch(dq[i].first, dq[i].second);
-			sorted_dq.insert(sorted_dq.begin() + place, dq[i].first);
+			if (place == 0)
+				sorted_dq.push_front(dq[i].first);
+			else
+				sorted_dq.insert(sorted_dq.begin() + place, dq[i].first);
 		}
 
 		// Erase members already added to sorted_dq
@@ -277,7 +300,10 @@ void	PmergeMe::dequeJacobsthaal( void ) {
 			sorted_dq.push_back(straggler);
 		else {
 			int place = dequeBinarySearch(straggler, sorted_dq.back());
-			sorted_dq.insert(sorted_dq.begin() + place, straggler);
+			if (place == 0)
+				sorted_dq.push_front(straggler);
+			else
+				sorted_dq.insert(sorted_dq.begin() + place, straggler);
 		}
 	}
 }
@@ -285,8 +311,8 @@ void	PmergeMe::dequeJacobsthaal( void ) {
 // My spin on binary search, returns the closest number larger than 'num'
 // Errors if 'big' is not a member of sorted_dq or if 'num' is already in sorted_dq
 int	PmergeMe::dequeBinarySearch( int num, int big ) {
-	if (dq.size() < 1)
-		throw (std::runtime_error("Error"));
+	// if (dq.size() < 1)
+	// 	throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;
 

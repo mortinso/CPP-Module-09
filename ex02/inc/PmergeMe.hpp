@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 18:03:53 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:26:52 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ class PmergeMe {
 	private:
 		std::vector<std::pair<int, int> >	vec;
 		std::vector<int>					sorted_vec;
+		int									vec_time;
 		std::deque<std::pair<int, int> >	dq;
 		std::deque<int>						sorted_dq;
+		int									dq_time;
 		int									straggler;
 		int									size;
 
