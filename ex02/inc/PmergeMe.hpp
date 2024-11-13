@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 17:20:58 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:03:53 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <deque>
 # include <string.h>
 # include <cmath>
+# include <ctime>
 
 # define BOLD		"\e[1m"
 # define ITALIC		"\e[3m"
@@ -53,7 +54,6 @@ class PmergeMe {
 
 		// Methods
 		void	mergeInsert( int argc, char **argv );
-		void	buildContainers( int argc, char **argv );
 		void	printContainers( void );
 
 		// Vector
@@ -77,6 +77,7 @@ class PmergeMe {
 bool	isValid( int argc, char **argv );
 bool	isValidInput( int argc, char **argv );
 bool	hasDuplicates( int argc, char **argv );
+bool	isSorted( int argc, char **argv );
 
 // Utils
 int	jacobsNumber( int n );

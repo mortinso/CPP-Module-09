@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 17:24:04 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:08:33 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,55 +51,34 @@ void	PmergeMe::mergeInsert( int argc, char **argv ) {
 	size = argc - 1;
 
 	// start timing vector
-	// call vector merge insert
+	vectorMergeInsert(argc, argv);
 	// stop timing vector
 
+	straggler = -1;
+
 	// start timing deque
-	// call deque merge insert
+	dequeMergeInsert(argc, argv);
 	// stop timing deque
 
-	// output after
+	// Vector after
+	std::cout << "After: ";
+	for (size_t i = 0; i < sorted_vec.size(); i++)
+		std::cout << sorted_vec[i] << " ";
+	std::cout << std::endl;
+
+	// Deque after
+	// std::cout << "After: ";
+	// for (size_t i = 0; i < sorted_dq.size(); i++)
+	// 	std::cout << sorted_dq[i] << " ";
+	// std::cout << std::endl;
 
 	// output time for vector
 	// output time for deque
 }
 
-
-// Saves input to the containers
-void	PmergeMe::buildContainers( int argc, char **argv ) {
-	size = argc - 1;
-
-	for (int i = 1; i < argc - (size % 2) - 1; i += 2) {
-		std::pair<int, int> tmp;
-		tmp.first = std::atoi(argv[i]);
-		tmp.second = std::atoi(argv[i + 1]);
-		vec.push_back(tmp);
-		dq.push_back(tmp);
-	}
-	if (size % 2 != 0)
-		straggler = std::atoi(argv[argc - 1]);
-}
-
-// Prints the contents of both containers
-void	PmergeMe::printContainers( void ) {
-	std::cout << "Vector: { ";
-	for (size_t i = 0; i < vec.size(); i++)
-		std::cout << vec[i].first << ", " << vec[i].second << " | ";
-	std::cout << "}" << std::endl;
-	std::cout << "Deque: { ";
-	for (size_t i = 0; i < dq.size(); i++)
-		std::cout << dq[i].first << ", " << dq[i].second << " | ";
-	std::cout << "}" << std::endl;
-
-	std::cout << "Straggler: " << this->straggler << std::endl;
-}
-
 // -----------------------------------Vector------------------------------------
 // Merge Insert sort for vector
 void	PmergeMe::vectorMergeInsert( int argc, char **argv ) {
-	std::cout << RED << "Remove line under this message" << RESET << std::endl;
-	size = argc - 1;
-
 	vectorBuild(argc, argv);
 
 	vectorSortPairs();
@@ -107,11 +86,6 @@ void	PmergeMe::vectorMergeInsert( int argc, char **argv ) {
 	vectorLarge();
 
 	vectorJacobsthaal();
-
-	std::cout << RED << "Remove this: " << RESET;
-	for (size_t i = 0; i < sorted_vec.size(); i++)
-		std::cout << sorted_vec[i] << " ";
-	std::cout << std::endl;
 }
 
 // Creates the vector with its members
@@ -221,9 +195,6 @@ int	PmergeMe::vectorBinarySearch( int num, int big ) {
 // -----------------------------------Deque-------------------------------------
 // Merge Insert sort for deque
 void	PmergeMe::dequeMergeInsert( int argc, char **argv ) {
-	std::cout << RED << "Remove line under this message" << RESET << std::endl;
-	size = argc - 1;
-
 	dequeBuild(argc, argv);
 
 	dequeSortPairs();
@@ -231,11 +202,6 @@ void	PmergeMe::dequeMergeInsert( int argc, char **argv ) {
 	dequeLarge();
 
 	dequeJacobsthaal();
-
-	std::cout << RED << "Remove this: " << RESET;
-	for (size_t i = 0; i < sorted_dq.size(); i++)
-		std::cout << sorted_dq[i] << " ";
-	std::cout << std::endl;
 }
 
 // Creates the deque with its members
@@ -344,19 +310,17 @@ int	PmergeMe::dequeBinarySearch( int num, int big ) {
 
 // -----------------------------------Checkers-------------------------------------
 bool	isValid( int argc, char **argv ) {
-	if (argc < 2) {
-		std::cerr << "Wrong number of arguments" << std::endl;
-		return false;
-	}
-	if (!isValidInput(argc, argv)) {
-		std::cerr << "Invalid input" << std::endl;
-		return false;
-	}
-	if (hasDuplicates(argc, argv)) {
-		std::cerr << "No duplicate inputs allowed" << std::endl;
-		return false;
-	}
-	return true;
+	if (argc < 3)
+		std::cerr << "Error: Not enough arguments" << std::endl;
+	else if (!isValidInput(argc, argv))
+		std::cerr << "Error: Invalid input" << std::endl;
+	else if (hasDuplicates(argc, argv))
+		std::cerr << "Error: No duplicate inputs allowed" << std::endl;
+	else if (isSorted(argc, argv))
+		std::cerr << "Error: Sequence is already in order" << std::endl;
+	else
+		return true;
+	return false;
 }
 
 // Checks arguments for invalid characters
@@ -384,6 +348,14 @@ bool	hasDuplicates( int argc, char **argv ) {
 		}
 	}
 	return false;
+}
+
+bool	isSorted( int argc, char **argv ) {
+	for (int i = 0; i < argc - 1; i++) {
+		if (std::atoi(argv[i]) > std::atoi(argv[i + 1]))
+			return false;
+	}
+	return true;
 }
 
 // -----------------------------------Utils-------------------------------------
