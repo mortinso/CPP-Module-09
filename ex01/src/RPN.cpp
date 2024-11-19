@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/30 04:49:34 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:56:58 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ void	RPN::doRPN( char *input ) {
 		while (input[i] == ' ')
 			i++;
 
-		// std::cout << "arg: " << input[i] << std::endl;
-
 		if (input[i] == 0)
 			break;
 
+		// if number, push to stack
 		if (input[i] >= '0' && input[i] <= '9')
 		{
 			if (input[i + 1] != 0 && input[i + 1] != ' ')
@@ -58,6 +57,7 @@ void	RPN::doRPN( char *input ) {
 			stck.push(input[i] - '0');
 		}
 
+		// if operator, call operate
 		else if (input[i] == '+' | input[i] == '-' | input[i] == '*' | input[i] == '/')
 		{
 			if (input[i + 1] != 0 && input[i + 1] != ' ')
@@ -75,7 +75,10 @@ void	RPN::doRPN( char *input ) {
 
 	std::cout << stck.top() << std::endl;
 }
-
+// operate:
+//	pops top 2;
+//	operates on them;
+//	pushes result to stack
 void	RPN::operate( char _operator ) {
 	if (stck.size() < 2)
 		throw(std::runtime_error("Error: Not enough operands before operator"));
@@ -105,6 +108,6 @@ void	RPN::operate( char _operator ) {
 			c = b / a;
 			break;
 	}
-	// std::cout << a << _operator << b << " = " << c << std::endl;
+	// std::cout << b << " " << _operator << " " << a << " = " << c << std::endl;
 	stck.push(c);
 }

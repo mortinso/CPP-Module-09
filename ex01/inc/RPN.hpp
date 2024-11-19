@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:39 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/30 04:33:05 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:47:19 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,21 @@ class RPN {
 	private:
 		std::stack<int, std::list<int> > stck;
 
+		RPN( const RPN &_rpn );
+		RPN &operator = ( const RPN &_rpn );
+
 		// Methods
 		void	operate( char _operator );
 
 	public:
 		// Constructors
 		RPN( void );
-		RPN( const RPN &_rpn );
 
 		// Destructor
 		~RPN( void );
 
-		// Operator overloads
-		RPN &operator = ( const RPN &_rpn );
-
-		// Getters
-
-		// Setters
-
 		// Methods
 		void	doRPN( char *input );
-
-		// Exceptions
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:37 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 13:47:33 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:56:51 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,5 @@ int	main( int argc, char **argv ) {
 	}
 	catch (const std::exception &e) { std::cerr << RED << e.what() << RESET << std::endl;}
 }
+
+// to compare results, visit https://paodayag.dev/reverse-polish-notation-js-parser/
