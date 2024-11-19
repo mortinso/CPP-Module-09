@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:57:59 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 12:08:44 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:45:52 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ BitcoinExchange& BitcoinExchange::operator = ( const BitcoinExchange &_bitcoinex
 }
 
 // -----------------------------------Methods-----------------------------------
+// Copies information from the database to the map
 void	BitcoinExchange::importDatabase( void ) {
 	std::ifstream file("data.csv");
 	if (!file.is_open())
@@ -58,10 +59,9 @@ void	BitcoinExchange::importDatabase( void ) {
 			throw (std::runtime_error("Error when parsing Database"));
 		data[line.substr(0, pos)] = std::atof(line.substr(pos + 1, std::string::npos).c_str());
 	}
-	/* for (std::map<std::string, double>::const_iterator it = data.begin(); it != data.end(); ++it)
-		std::cout << it->first << " " << std::fixed << std::setprecision(2) << it->second << std::endl; */
 }
 
+// Returns true if month has 31 days
 bool	isBigMonth( int month ) {
 	int	big_months[7] = {1, 3, 5, 7, 8, 10, 12};
 
@@ -72,6 +72,7 @@ bool	isBigMonth( int month ) {
 	return (false);
 }
 
+// checks if date is valid
 bool	isValidDate( std::string date, std::string line ) {
 	if ((date.length() != 10) || (date[4] != '-') || (date[7] != '-'))
 		return (false);
@@ -83,12 +84,15 @@ bool	isValidDate( std::string date, std::string line ) {
 
 	std::istringstream(date) >> year >> separator1 >> month >> separator2 >> day;
 
+	// checks for invalid year, month and days
 	if (year < 0 || !(month >= 1 && month <= 12) || !(day >= 1 && day <= 31))
 		valid = false;
 
+	// checks that month is in fact supposed to have 31 days
 	else if (day == 31 && !isBigMonth(month))
 		valid = false;
 
+	// february checks, mainly leap year
 	else if ((day > 29 && month == 2) || (day == 29 && month == 2 && (year % 4 != 0 || \
 		(year % 4 == 0 && year % 100 == 0 && year % 400 != 0))))
 		valid = false;
@@ -99,6 +103,7 @@ bool	isValidDate( std::string date, std::string line ) {
 	return (valid);
 }
 
+// checks if value is valid
 bool	isValidValue( double value ) {
 	if (value < 0)
 	{
@@ -113,6 +118,7 @@ bool	isValidValue( double value ) {
 	return true;
 }
 
+// returns the correct exchange rate from the database
 double	BitcoinExchange::getExchangeRate(std::string date) {
 	std::map<std::string, double>::const_iterator it = data.lower_bound(date);
 	if ( it != data.begin() && (it == data.end() || it->first != date))
@@ -122,6 +128,7 @@ double	BitcoinExchange::getExchangeRate(std::string date) {
 	return (it->second);
 }
 
+// Calculates the value and outputs the correct message
 void	BitcoinExchange::calculate( std::string line, std::string date, double value ) {
 	double exchange_rate = getExchangeRate(date);
 

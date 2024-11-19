@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:58:04 by mortins-          #+#    #+#             */
-/*   Updated: 2024/10/28 12:04:46 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:41:32 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ class BitcoinExchange {
 	private:
 		std::map<std::string, double> data;
 
+		BitcoinExchange( const BitcoinExchange &_bitcoinexchange );
+		BitcoinExchange &operator = ( const BitcoinExchange &_bitcoinexchange );
+
 		// Methods
 		void	importDatabase( void );
 		double	getExchangeRate(std::string date);
@@ -43,13 +46,9 @@ class BitcoinExchange {
 	public:
 		// Constructors
 		BitcoinExchange( void );
-		BitcoinExchange( const BitcoinExchange &_bitcoinexchange );
 
 		// Destructor
 		~BitcoinExchange( void );
-
-		// Operator overloads
-		BitcoinExchange &operator = ( const BitcoinExchange &_bitcoinexchange );
 
 		// Methods
 		void	calculate( std::string line, std::string date, double value );
