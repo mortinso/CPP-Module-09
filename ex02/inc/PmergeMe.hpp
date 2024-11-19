@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 18:26:52 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:36:23 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@
 # define CYAN		"\e[96m"
 # define INVERT		"\e[90m\e[107m"
 # define RESET		"\e[0m"
+
+template <typename T>
+bool	isSorted( T begin, T const &end ) {
+	for(long temp = -1; begin != end ;begin++) {
+		if (static_cast<long>(*begin) < temp)
+			return (false);
+		temp = *begin;
+	}
+	return (true);
+}
 
 class PmergeMe {
 	private:

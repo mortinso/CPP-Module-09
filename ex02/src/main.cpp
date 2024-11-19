@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 20:44:16 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:34:11 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,5 @@ int	main( int argc, char **argv ) {
 	try {
 		pm.mergeInsert(argc, argv);
 	}
-	catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
-	}
+	catch (std::exception &e) { std::cerr << e.what() << std::endl; }
 }

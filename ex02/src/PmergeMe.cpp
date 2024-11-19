@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/13 20:31:07 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:37:29 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,16 @@ void	PmergeMe::mergeInsert( int argc, char **argv ) {
 	vec_time = std::clock();
 	vectorMergeInsert(argc, argv);
 	vec_time = std::clock() - vec_time;
+	if (!isSorted(sorted_vec.begin(), sorted_vec.end()))
+		throw (std::runtime_error("Vector wasn't sorted"));
 
 	straggler = -1;
 
 	dq_time = std::clock();
 	dequeMergeInsert(argc, argv);
 	dq_time = std::clock() - dq_time;
+	if (!isSorted(sorted_dq.begin(), sorted_dq.end()))
+		throw (std::runtime_error("Deque wasn't sorted"));
 
 	// Vector after
 	std::cout << "After:\t";
@@ -189,8 +193,6 @@ void	PmergeMe::vectorJacobsthaal( void ) {
 // My spin on binary search, returns the closest number larger than 'num'
 // Errors if 'big' is not a member of sorted_vec or if 'num' is already in sorted_vec
 int	PmergeMe::vectorBinarySearch( int num, int big ) {
-	// if (vec.size() < 1)
-	// 	throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;
 
@@ -311,8 +313,6 @@ void	PmergeMe::dequeJacobsthaal( void ) {
 // My spin on binary search, returns the closest number larger than 'num'
 // Errors if 'big' is not a member of sorted_dq or if 'num' is already in sorted_dq
 int	PmergeMe::dequeBinarySearch( int num, int big ) {
-	// if (dq.size() < 1)
-	// 	throw (std::runtime_error("Error"));
 	int	high = 0;
 	int	low = 0;
 
