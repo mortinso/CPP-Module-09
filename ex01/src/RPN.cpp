@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/19 16:56:58 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:29:16 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ RPN::~RPN( void ) {
 // Copy assignment operator overload
 RPN& RPN::operator = ( const RPN &_rpn ) {
 	// std::cout << "RPN copy assignment operator called" << std::endl;
-	if (this != &_rpn) {
+	if (this != &_rpn)
 		stck = _rpn.stck;
-	}
 	return (*this);
 }
 
@@ -50,16 +49,14 @@ void	RPN::doRPN( char *input ) {
 			break;
 
 		// if number, push to stack
-		if (input[i] >= '0' && input[i] <= '9')
-		{
+		if (input[i] >= '0' && input[i] <= '9') {
 			if (input[i + 1] != 0 && input[i + 1] != ' ')
 				throw(std::runtime_error("Error: No space between arguments"));
 			stck.push(input[i] - '0');
 		}
 
 		// if operator, call operate
-		else if (input[i] == '+' | input[i] == '-' | input[i] == '*' | input[i] == '/')
-		{
+		else if (input[i] == '+' | input[i] == '-' | input[i] == '*' | input[i] == '/') {
 			if (input[i + 1] != 0 && input[i + 1] != ' ')
 				throw(std::runtime_error("Error: No space between arguments"));
 			operate(input[i]);
@@ -89,25 +86,21 @@ void	RPN::operate( char _operator ) {
 	int	b = stck.top();
 	stck.pop();
 
-	int	c;
-
 	switch (_operator) {
 		case '+':
-			c = b + a;
+			stck.push(b + a);
 			break;
 
 		case '-':
-			c = b - a;
+			stck.push(b - a);
 			break;
 
 		case '*':
-			c = b * a;
+			stck.push(b * a);
 			break;
 
 		case '/':
-			c = b / a;
+			stck.push(b / a);
 			break;
 	}
-	// std::cout << b << " " << _operator << " " << a << " = " << c << std::endl;
-	stck.push(c);
 }
