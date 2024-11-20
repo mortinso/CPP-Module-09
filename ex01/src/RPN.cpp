@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:23:34 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/19 20:29:16 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:00:34 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	RPN::doRPN( char *input ) {
 		}
 
 		// if operator, call operate
-		else if (input[i] == '+' | input[i] == '-' | input[i] == '*' | input[i] == '/') {
+		else if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/') {
 			if (input[i + 1] != 0 && input[i + 1] != ' ')
 				throw(std::runtime_error("Error: No space between arguments"));
 			operate(input[i]);
@@ -72,6 +72,7 @@ void	RPN::doRPN( char *input ) {
 
 	std::cout << stck.top() << std::endl;
 }
+
 // operate:
 //	pops top 2;
 //	operates on them;
@@ -100,6 +101,8 @@ void	RPN::operate( char _operator ) {
 			break;
 
 		case '/':
+			if (a == 0)
+				throw(std::runtime_error("Error: Division by zero"));
 			stck.push(b / a);
 			break;
 	}
