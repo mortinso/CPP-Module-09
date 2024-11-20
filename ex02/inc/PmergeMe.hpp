@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:48 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/19 20:36:23 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:09:05 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ class PmergeMe {
 
 		// Methods
 		void	mergeInsert( int argc, char **argv );
-		void	printContainers( void );
 
 		// Vector
 		void	vectorMergeInsert( int argc, char **argv );
