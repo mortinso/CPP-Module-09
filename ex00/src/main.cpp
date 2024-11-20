@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:56:51 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/20 17:52:09 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:06:15 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,4 @@ int	main( int argc, char **argv ) {
 
 	}
 	catch (const std::exception &e) { std::cerr << RED_H << e.what() << RESET << std::endl; }
-	std::cout << RED_H << "Check all errors on input.txt" << std::endl;
-	std::cout << "Maybe add exchange rate and found date to output, or at least an option to do it" << RESET << std::endl;
 }
