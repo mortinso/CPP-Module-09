@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:56:51 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/20 16:57:02 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:52:09 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ int	main( int argc, char **argv ) {
 			istring >> date >> separator >> value;
 
 
-			if (separator == 0 || separator != '|') {
-				std::cerr << RED_H << "Error: bad input => " << RESET << line << std::endl;
+			if (!isValidDate( date ))
+				continue ;
+			else if (separator == 0 || separator != '|') {
+				std::cerr << RED_H << "Error: bad separator => " << RESET << separator << std::endl;
 				continue ;
 			}
-			else if (!isValidDate(date, line))
-				continue ;
 			else if (!isValidValue(value))
 				continue ;
 
-			btc.calculate(line, date, value);
+			btc.calculate(date, value, false);
 		}
 
 	}
