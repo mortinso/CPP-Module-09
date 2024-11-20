@@ -8,7 +8,7 @@ INC_DIR = inc
 OBJ_DIR = .obj
 
 SRC_FILES = main.cpp RPN.cpp
-INC_FILES = RPN.hpp
+INC_FILES = RPN.hpp colors.hpp
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 HDRS = $(addprefix $(INC_DIR)/, $(INC_FILES))
