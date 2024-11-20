@@ -8,7 +8,7 @@ INC_DIR = inc
 OBJ_DIR = .obj
 
 SRC_FILES = main.cpp BitcoinExchange.cpp
-INC_FILES = BitcoinExchange.hpp
+INC_FILES = BitcoinExchange.hpp colors.hpp
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 HDRS = $(addprefix $(INC_DIR)/, $(INC_FILES))

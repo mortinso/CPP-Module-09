@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 05:57:59 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/19 16:45:52 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:00:36 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ BitcoinExchange::~BitcoinExchange( void ) {
 // Copy assignment operator overload
 BitcoinExchange& BitcoinExchange::operator = ( const BitcoinExchange &_bitcoinexchange ) {
 	// std::cout << "BitcoinExchange copy assignment operator called" << std::endl;
-	if (this != &_bitcoinexchange) {
+	if (this != &_bitcoinexchange)
 		*this = _bitcoinexchange;
-	}
 	return (*this);
 }
 
@@ -52,8 +51,7 @@ void	BitcoinExchange::importDatabase( void ) {
 		throw (std::runtime_error("Invalid Database"));
 
 	size_t	pos = 0;
-	while (std::getline(file, line))
-	{
+	while (std::getline(file, line)) {
 		pos = line.find(",");
 		if (pos == std::string::npos)
 			throw (std::runtime_error("Error when parsing Database"));
@@ -74,8 +72,10 @@ bool	isBigMonth( int month ) {
 
 // checks if date is valid
 bool	isValidDate( std::string date, std::string line ) {
-	if ((date.length() != 10) || (date[4] != '-') || (date[7] != '-'))
+	if ((date.length() != 10) || (date[4] != '-') || (date[7] != '-')) {
+		std::cerr << RED_H << "Error: bad date => " << RESET << line.substr(0, line.find('|')) << std::endl;
 		return (false);
+	}
 
 	int year, month, day;
 	char separator1;
@@ -98,24 +98,34 @@ bool	isValidDate( std::string date, std::string line ) {
 		valid = false;
 
 	if ( valid == false )
-		std::cerr << RED << "Error: bad date => " << RESET << line.substr(0, line.find('|')) << std::endl;
+		std::cerr << RED_H << "Error: bad date => " << RESET << line.substr(0, line.find('|')) << std::endl;
 
 	return (valid);
 }
 
 // checks if value is valid
-bool	isValidValue( double value ) {
-	if (value < 0)
-	{
-		std::cerr << RED << "Error: not a positive number." << RESET << std::endl;
+bool	isValidValue( std::string value ) {
+	if (!value[0]) {
+		std::cerr << RED_H << "Error: invalid value => " << RESET << value << std::endl;
 		return false;
 	}
-	else if (value > 1000)
-	{
-		std::cerr << RED << "Error: too large a number." << RESET << std::endl;
-		return false;
+
+	for (size_t i = 0; i < value.length(); i++) {
+		if (!isdigit(value[i])) {
+			std::cerr << RED_H << "Error: invalid value => " << RESET << value << std::endl;
+			return false;
+		}
 	}
-	return true;
+
+	double num = std::atof(value.c_str());
+
+	if (num >= 0 && num <= 1000)
+		return true;
+	if (num < 0)
+		std::cerr << RED_H << "Error: not a positive value => " << RESET << value << std::endl;
+	else if (num > 1000)
+		std::cerr << RED_H << "Error: value too large => " << RESET << value << std::endl;
+	return false;
 }
 
 // returns the correct exchange rate from the database
@@ -129,8 +139,9 @@ double	BitcoinExchange::getExchangeRate(std::string date) {
 }
 
 // Calculates the value and outputs the correct message
-void	BitcoinExchange::calculate( std::string line, std::string date, double value ) {
+void	BitcoinExchange::calculate( std::string line, std::string date, std::string value ) {
 	double exchange_rate = getExchangeRate(date);
 
-	std::cout << date << " => " << line.substr(line.find('|') + 2, std::string::npos) << " = " << (exchange_rate * value) << std::endl;
+	std::cout << date << " => " << line.substr(line.find('|') + 2, std::string::npos) << " = ";
+	std::cout << (exchange_rate * std::atof(value.c_str())) << std::endl;
 }
