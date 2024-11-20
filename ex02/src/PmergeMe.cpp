@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/19 20:37:29 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:18:48 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	PmergeMe::mergeInsert( int argc, char **argv ) {
 
 	std::cout << std::endl;
 
-	std::cout << "Time to process a range of " << size << " elements with std::vector:\t" << INVERT ;
+	std::cout << "Time to process a range of " << size << " elements with std::vector:\t" << INVERT;
 	std::cout << static_cast<double>(vec_time) / CLOCKS_PER_SEC * 1000 << "ms" << RESET << std::endl;
 	std::cout << "Time to process a range of " << size << " elements with std::deque :\t" << INVERT;
 	std::cout << static_cast<double>(dq_time) / CLOCKS_PER_SEC * 1000 << "ms" << RESET << std::endl;
