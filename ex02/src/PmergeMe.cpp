@@ -6,7 +6,7 @@
 /*   By: mortins- <mortins-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:59:52 by mortins-          #+#    #+#             */
-/*   Updated: 2024/11/20 18:18:48 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:53:37 by mortins-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	PmergeMe::mergeInsert( int argc, char **argv ) {
 	vectorMergeInsert(argc, argv);
 	vec_time = std::clock() - vec_time;
 	if (!isSorted(sorted_vec.begin(), sorted_vec.end()))
-		throw (std::runtime_error("Vector wasn't sorted"));
+		throw (std::runtime_error("Error: Vector wasn't sorted"));
 
 	straggler = -1;
 
@@ -66,7 +66,7 @@ void	PmergeMe::mergeInsert( int argc, char **argv ) {
 	dequeMergeInsert(argc, argv);
 	dq_time = std::clock() - dq_time;
 	if (!isSorted(sorted_dq.begin(), sorted_dq.end()))
-		throw (std::runtime_error("Deque wasn't sorted"));
+		throw (std::runtime_error("Error: Deque wasn't sorted"));
 
 	// Vector after
 	std::cout << "After:\t";
